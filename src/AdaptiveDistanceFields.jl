@@ -5,6 +5,9 @@ import RegionTrees: needs_refinement, refine_data
 using Interpolations
 import StaticArrays: SVector
 
+export AdaptiveDistanceField,
+       evaluate
+
 include("interpolation.jl")
 include("adaptivesampling.jl")
 include("meshdistance.jl")

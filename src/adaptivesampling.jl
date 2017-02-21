@@ -5,7 +5,8 @@ type SignedDistanceRefinery{F <: Function} <: AbstractRefinery
 end
 
 function needs_refinement(refinery::SignedDistanceRefinery, cell::Cell)
-    minimum(cell.boundary.widths) > refinery.atol && needs_refinement(cell, refinery.signed_distance_func, refinery.atol, refinery.rtol)
+    (minimum(cell.boundary.widths) > refinery.atol
+     && needs_refinement(cell, refinery.signed_distance_func, refinery.atol, refinery.rtol))
 end
 
 function needs_refinement(cell::Cell, signed_distance_func, atol, rtol)
@@ -27,14 +28,4 @@ function refine_data(refinery::SignedDistanceRefinery, boundary::HyperRectangle)
     extrapolate(interpolate!(refinery.signed_distance_func.(vertices(boundary)),
                              BSpline(Linear()),
                              OnGrid()), Linear())
-end
-
-function ASDF(signed_distance::Function, origin::AbstractArray,
-              widths::AbstractArray,
-              rtol=1e-2,
-              atol=1e-2)
-    refinery = SignedDistanceRefinery(signed_distance, atol, rtol)
-    boundary = HyperRectangle(origin, widths)
-    root = Cell(boundary, refine_data(refinery, boundary))
-    adaptivesampling!(root, refinery)
 end
