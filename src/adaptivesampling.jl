@@ -24,9 +24,9 @@ function refine_data(refinery::SignedDistanceRefinery, cell::Cell, indices)
 end
 
 function refine_data(refinery::SignedDistanceRefinery, boundary::HyperRectangle)
-    interpolate!(refinery.signed_distance_func.(vertices(boundary)),
-                 BSpline(Linear()),
-                 OnGrid())
+    extrapolate(interpolate!(refinery.signed_distance_func.(vertices(boundary)),
+                             BSpline(Linear()),
+                             OnGrid()), Linear())
 end
 
 function ASDF(signed_distance::Function, origin::AbstractArray,
