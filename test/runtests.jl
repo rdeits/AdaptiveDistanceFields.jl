@@ -47,5 +47,6 @@ end
 @testset "mesh" begin
     mesh = load(joinpath(dirname(@__FILE__), "data", "convex_mesh.obj"))
     adf = AdaptiveDistanceField(ConvexMesh.signed_distance(mesh), 
-                                SVector(-4., -4, -4), SVector(8., 8, 8))
+                                SVector(-4., -4, -4), SVector(8., 8, 8),
+                                0.05, 0.05)
 end
