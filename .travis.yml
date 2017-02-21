@@ -2,16 +2,20 @@
 language: julia
 os:
   - linux
-  - osx
 julia:
-  - release
+  - 0.5
   - nightly
 notifications:
   email: false
-# uncomment the following lines to override the default test script
-#script:
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("AdaptiveDistanceFields"); Pkg.test("AdaptiveDistanceFields"; coverage=true)'
+branches:
+  only: master
+matrix:
+  allow_failures:
+    - julia: nightly
+script:
+ - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+ - julia -e 'Pkg.clone("https://github.com/rdeits/EnhancedGJK.jl.git")'
+ - julia -e 'Pkg.clone(pwd()); Pkg.build("AdaptiveDistanceFields"); Pkg.test("AdaptiveDistanceFields"; coverage=true)'
 after_success:
   # push coverage results to Coveralls
   - julia -e 'cd(Pkg.dir("AdaptiveDistanceFields")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
