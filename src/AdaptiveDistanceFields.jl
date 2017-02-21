@@ -2,11 +2,17 @@ module AdaptiveDistanceFields
 
 using RegionTrees
 import RegionTrees: needs_refinement, refine_data
-using Interpolations
-import StaticArrays: SVector
+using Interpolations: interpolate!, 
+                      extrapolate, 
+                      AbstractInterpolation,
+                      BSpline,
+                      OnGrid,
+                      Linear
+using StaticArrays: SVector
 
 export AdaptiveDistanceField,
-       evaluate
+       evaluate,
+       ConvexMesh
 
 include("interpolation.jl")
 include("adaptivesampling.jl")

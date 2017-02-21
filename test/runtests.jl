@@ -1,6 +1,8 @@
 using AdaptiveDistanceFields
 using Base.Test
 using StaticArrays: SVector
+using MeshIO
+using FileIO
 import ForwardDiff
 
 @testset "coarse" begin
@@ -42,3 +44,8 @@ end
     @test isapprox(ForwardDiff.derivative(y -> adf(SVector(-2, y)), -100), -1, atol=1e-2, rtol=1e-2)
 end
 
+@testset "mesh" begin
+    mesh = load(joinpath(dirname(@__FILE__), "data", "convex_mesh.obj"))
+    adf = AdaptiveDistanceField(ConvexMesh.signed_distance(mesh), 
+                                SVector(-4., -4, -4), SVector(8., 8, 8))
+end
