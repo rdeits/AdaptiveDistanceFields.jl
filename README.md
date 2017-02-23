@@ -40,3 +40,62 @@ adf = AdaptiveDistanceField(true_signed_distance, origin, widths, rtol, atol)
 ```
 
 The meanings of `rtol` and `atol` are equivalent to those used by the built-in `isapprox()`: a cell is divided if `norm(true - approximate) <= atol + rtol*max(norm(true), norm(approximate))`, evaluated at the center of the cell and and the center of each of its faces. 
+
+## Using meshes
+
+AdaptiveDistanceFields.jl also defines a built-in `signed_distance` function for convex meshes provided by [GeometryTypes.jl](https://github.com/JuliaGeometry/GeometryTypes.jl). This function is relatively slow, but is ideal for adaptive approximation:
+
+```julia
+julia> using MeshIO
+
+julia> using FileIO
+
+julia> using BenchmarkTools
+
+julia> mesh = load(joinpath(Pkg.dir("AdaptiveDistanceFields"), "test", "data", "convex_mesh.obj"))
+
+HomogenousMesh(
+    normals: 52xGeometryTypes.Normal{3,Float32},     vertices: 52xFixedSizeArrays.Point{3,Float32},     faces: 100xGeometryTypes.Face{3,UInt32,-1}, )
+
+
+julia> adf = AdaptiveDistanceField(ConvexMesh.signed_distance(mesh),
+                                   SVector(-4., -4, -4), SVector(8., 8, 8),
+                                   0.05, 0.05)
+(::AdaptiveDistanceField) (generic function with 1 method)
+
+julia> p = SVector(0.2, 0.1, 0.15)
+3-element StaticArrays.SVector{3,Float64}:
+ 0.2
+ 0.1
+ 0.15
+
+julia> @benchmark(ConvexMesh.signed_distance($mesh, $p))
+BenchmarkTools.Trial:
+  memory estimate:  1.94 KiB
+  allocs estimate:  8
+  --------------
+  minimum time:     10.346 μs (0.00% GC)
+  median time:      10.678 μs (0.00% GC)
+  mean time:        11.914 μs (2.06% GC)
+  maximum time:     2.510 ms (97.94% GC)
+  --------------
+  samples:          10000
+  evals/sample:     1
+  time tolerance:   5.00%
+  memory tolerance: 1.00%
+
+julia> @benchmark($adf($p))
+BenchmarkTools.Trial:
+  memory estimate:  64 bytes
+  allocs estimate:  4
+  --------------
+  minimum time:     145.978 ns (0.00% GC)
+  median time:      148.954 ns (0.00% GC)
+  mean time:        161.464 ns (2.11% GC)
+  maximum time:     1.786 μs (89.29% GC)
+  --------------
+  samples:          10000
+  evals/sample:     832
+  time tolerance:   5.00%
+  memory tolerance: 1.00%
+```
