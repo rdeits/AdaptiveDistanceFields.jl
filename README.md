@@ -11,6 +11,8 @@ The quadtree and octree data structures and the general adaptive sampling framew
 
 # Usage
 
+Check out the `examples` folder for additional demonstrations. 
+
 To construct the adaptively sampled distance field, you need to at least provide the true signed distance function (typically one which is very expensive to compute) and a range over which to approximate it:
 
 ```julia
