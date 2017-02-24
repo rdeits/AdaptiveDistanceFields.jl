@@ -5,19 +5,16 @@ type SignedDistanceRefinery{F <: Function} <: AbstractRefinery
 end
 
 function needs_refinement(refinery::SignedDistanceRefinery, cell::Cell)
-    (minimum(cell.boundary.widths) > refinery.atol
-     && needs_refinement(cell, refinery.signed_distance_func, refinery.atol, refinery.rtol))
-end
+    minimum(cell.boundary.widths) > refinery.atol || return false
 
-function needs_refinement(cell::Cell, signed_distance_func, atol, rtol)
     for c in body_and_face_centers(cell.boundary)
         value_interp = evaluate(cell, c)
         value_true = signed_distance_func(c)
-        if !isapprox(value_interp, value_true, rtol=rtol, atol=atol)
+        if !isapprox(value_interp, value_true, rtol=refinery.rtol, atol=refinery.atol)
             return true
         end
     end
-    false
+    return false
 end
 
 function refine_data(refinery::SignedDistanceRefinery, cell::Cell, indices)
