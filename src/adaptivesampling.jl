@@ -9,7 +9,7 @@ function needs_refinement(refinery::SignedDistanceRefinery, cell::Cell)
 
     for c in body_and_face_centers(cell.boundary)
         value_interp = evaluate(cell, c)
-        value_true = signed_distance_func(c)
+        value_true = refinery.signed_distance_func(c)
         if !isapprox(value_interp, value_true, rtol=refinery.rtol, atol=refinery.atol)
             return true
         end
