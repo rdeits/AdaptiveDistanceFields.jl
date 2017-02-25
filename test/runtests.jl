@@ -1,8 +1,6 @@
 using AdaptiveDistanceFields
 using Base.Test
 using StaticArrays: SVector
-using MeshIO
-using FileIO
 using BenchmarkTools
 import ForwardDiff
 
