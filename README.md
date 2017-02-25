@@ -5,7 +5,7 @@
 
 This package implements the adaptively sampled distance fields (ADFs) introduced by Frisken et al. [1]. An ADF represents an arbitrary signed distance function by locally approximating that function with a bilinear interpolation over a quadtree (in 2D) or a trilinear interpolation over an octree (in 3D). When the ADF is created, each cell in the tree is subdivided until the multilinear approximation is a sufficiently close match to the real signed distance function over that cell. 
 
-The quadtree and octree data structures and the general adaptive sampling framework are provided by [RegionTrees.jl](https://github.com/rdeits/RegionTrees.jl). This package adds the ADF interpolation functions and some helpers for creating signed distance functions from convex meshes.
+The quadtree and octree data structures and the general adaptive sampling framework are provided by [RegionTrees.jl](https://github.com/rdeits/RegionTrees.jl). This package adds the ADF interpolation functions using [Interpolations.jl](https://github.com/tlycken/Interpolations.jl).
 
 [1] Sarah F. Frisken, Ronald N. Perry, and Thouis R. Jones. "Adaptively Sampled Distance Fields: A General Representation of Shape for Computer Graphics". SIGGRAPH 2000. 
 
@@ -45,22 +45,25 @@ The meanings of `rtol` and `atol` are equivalent to those used by the built-in `
 
 ## Using meshes
 
-AdaptiveDistanceFields.jl also defines a built-in `signed_distance` function for convex meshes provided by [GeometryTypes.jl](https://github.com/JuliaGeometry/GeometryTypes.jl). This function is relatively slow, but is ideal for adaptive approximation:
+The [EnhancedGJK.jl](https://github.com/rdeits/EnhancedGJK.jl) package provides tools for computing the signed distance between convex bodies. In particular, it provides the `ReferenceDistance.signed_distance` function to compute the distance from a mesh to a point using a slow but straightforward algorithm. That particular method is ideal for adaptive approximation:
+
 
 ```julia
+julia> Pkg.add("EnhancedGJK")
+
 julia> using MeshIO
 
 julia> using FileIO
 
 julia> using BenchmarkTools
 
-julia> mesh = load(joinpath(Pkg.dir("AdaptiveDistanceFields"), "test", "data", "convex_mesh.obj"))
+julia> mesh = load(joinpath(Pkg.dir("EnhancedGJK"), "test", "meshes", "base_link.obj"))
 
 HomogenousMesh(
     normals: 52xGeometryTypes.Normal{3,Float32},     vertices: 52xFixedSizeArrays.Point{3,Float32},     faces: 100xGeometryTypes.Face{3,UInt32,-1}, )
 
 
-julia> adf = AdaptiveDistanceField(ConvexMesh.signed_distance(mesh),
+julia> adf = AdaptiveDistanceField(ReferenceDistance.signed_distance(mesh),
                                    SVector(-4., -4, -4), SVector(8., 8, 8),
                                    0.05, 0.05)
 (::AdaptiveDistanceField) (generic function with 1 method)
