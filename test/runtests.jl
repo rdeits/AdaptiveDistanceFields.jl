@@ -1,7 +1,6 @@
 using AdaptiveDistanceFields
 using Base.Test
 using StaticArrays: SVector
-using BenchmarkTools
 import ForwardDiff
 
 @testset "coarse" begin
