@@ -18,7 +18,6 @@ export AdaptiveDistanceField,
 
 include("interpolation.jl")
 include("adaptivesampling.jl")
-include("meshdistance.jl")
 
 immutable AdaptiveDistanceField{C <: Cell} <: Function
     root::C
