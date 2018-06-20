@@ -1,4 +1,4 @@
-@generated function evaluate{N}(itp::AbstractInterpolation, point::SVector{N})
+@generated function evaluate(itp::AbstractInterpolation, point::SVector{N}) where N
     Expr(:ref, :itp, [:(point[$i]) for i in 1:N]...)
 end
 
@@ -6,7 +6,7 @@ function evaluate(itp::AbstractInterpolation, point::AbstractArray)
     itp[point...]
 end
 
-function evaluate{D <: AbstractInterpolation}(cell::Cell{D}, point::AbstractArray)
+function evaluate(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
     leaf = findleaf(cell, point)
     evaluate(leaf.data, leaf.boundary, point)
 end

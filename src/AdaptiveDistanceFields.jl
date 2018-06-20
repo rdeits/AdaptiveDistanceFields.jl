@@ -4,8 +4,8 @@ module AdaptiveDistanceFields
 
 using RegionTrees
 import RegionTrees: needs_refinement, refine_data
-using Interpolations: interpolate!, 
-                      extrapolate, 
+using Interpolations: interpolate!,
+                      extrapolate,
                       AbstractInterpolation,
                       BSpline,
                       OnGrid,
@@ -19,7 +19,7 @@ export AdaptiveDistanceField,
 include("interpolation.jl")
 include("adaptivesampling.jl")
 
-immutable AdaptiveDistanceField{C <: Cell} <: Function
+struct AdaptiveDistanceField{C <: Cell} <: Function
     root::C
 end
 
