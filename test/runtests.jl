@@ -1,7 +1,7 @@
+import ForwardDiff  # Needs to be first due to https://github.com/JuliaMath/Interpolations.jl/issues/207
 using AdaptiveDistanceFields
 using Base.Test
 using StaticArrays: SVector
-import ForwardDiff
 
 @testset "coarse" begin
     rtol = 0.05
