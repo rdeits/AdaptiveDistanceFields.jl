@@ -4,6 +4,7 @@ os:
   - linux
 julia:
   - 0.6
+  - 0.7
   - nightly
 notifications:
   email: false
@@ -11,6 +12,7 @@ branches:
   only: master
 matrix:
   allow_failures:
+    - julia: 0.7
     - julia: nightly
 git:
   depth: 999999999
