@@ -1,4 +1,4 @@
-type SignedDistanceRefinery{F <: Function} <: AbstractRefinery
+struct SignedDistanceRefinery{F <: Function} <: AbstractRefinery
     signed_distance_func::F
     atol::Float64
     rtol::Float64

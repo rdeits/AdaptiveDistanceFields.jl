@@ -1,7 +1,7 @@
+import ForwardDiff  # Needs to be first due to https://github.com/JuliaMath/Interpolations.jl/issues/207
 using AdaptiveDistanceFields
 using Base.Test
 using StaticArrays: SVector
-import ForwardDiff
 
 @testset "coarse" begin
     rtol = 0.05
@@ -24,9 +24,6 @@ end
 
     for x in linspace(-5, 5)
         for y in linspace(-5, 5)
-            # if !isapprox(adf(SVector(x, y)), s(SVector(x, y)), atol=0.005, rtol=0.005)
-            #     @show x y adf(SVector(x, y)) s(SVector(x, y))
-            # end
             @test isapprox(adf(SVector(x, y)), s(SVector(x, y)), atol=0.005, rtol=0.005)
         end
     end
