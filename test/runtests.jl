@@ -1,6 +1,6 @@
 import ForwardDiff  # Needs to be first due to https://github.com/JuliaMath/Interpolations.jl/issues/207
 using AdaptiveDistanceFields
-using Base.Test
+using Test
 using StaticArrays: SVector
 
 @testset "coarse" begin
@@ -9,8 +9,8 @@ using StaticArrays: SVector
     s = x -> sqrt(sum((x - SVector(1, 2)).^2))
     adf = AdaptiveDistanceField(s, SVector(-1., -1), SVector(5., 5), rtol, atol)
 
-    for x in linspace(-1, 4)
-        for y in linspace(-1, 4)
+    for x in range(-1,4,length=50)
+        for y in range(-1,4,length=50)
             @test isapprox(adf(SVector(x, y)), s(SVector(x, y)), atol=atol, rtol=rtol)
         end
     end
@@ -22,8 +22,8 @@ end
     s = x -> sqrt(sum((x - SVector(-2, -1)).^2))
     adf = AdaptiveDistanceField(s, SVector(-5., -5), SVector(10., 10), rtol, atol)
 
-    for x in linspace(-5, 5)
-        for y in linspace(-5, 5)
+    for x in range(-5,5,length=50)
+        for y in range(-5,5,length=50)
             @test isapprox(adf(SVector(x, y)), s(SVector(x, y)), atol=0.005, rtol=0.005)
         end
     end

@@ -9,7 +9,8 @@ using Interpolations: interpolate!,
                       AbstractInterpolation,
                       BSpline,
                       OnGrid,
-                      Linear
+                      Linear,
+                      Line
 using StaticArrays: SVector
 
 export AdaptiveDistanceField,
