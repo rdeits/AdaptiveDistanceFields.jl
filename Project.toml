@@ -1,0 +1,21 @@
+name = "AdaptiveDistanceFields"
+uuid = "a1957575-6125-5dba-8f92-417d2d1f4a46"
+authors = ["Robin Deits <robin.deits@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+RegionTrees = "dee08c22-ab7f-5625-9660-a9af2021b33f"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+
+[compat]
+Interpolations = "0.9, 0.10, 0.11"
+RegionTrees = "0.2"
+julia = "1"
+
+[extras]
+ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test", "ForwardDiff"]
