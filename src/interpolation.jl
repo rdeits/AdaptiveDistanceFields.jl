@@ -1,5 +1,5 @@
 @generated function evaluate(itp::AbstractInterpolation, point::SVector{N}) where N
-    Expr(:ref, :itp, [:(point[$i]) for i in 1:N]...)
+    Expr(:call, :itp, [:(point[$i]) for i in 1:N]...)
 end
 
 function evaluate(itp::AbstractInterpolation, point::AbstractArray)

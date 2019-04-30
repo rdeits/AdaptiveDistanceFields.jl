@@ -23,6 +23,6 @@ end
 
 function refine_data(refinery::SignedDistanceRefinery, boundary::HyperRectangle)
     extrapolate(interpolate!(refinery.signed_distance_func.(vertices(boundary)),
-                             BSpline(Linear()),
-                             OnGrid()), Linear())
+                             BSpline(Linear())),
+                             Line())
 end
