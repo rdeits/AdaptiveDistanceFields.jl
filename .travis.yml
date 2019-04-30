@@ -4,13 +4,12 @@ os:
   - linux
 julia:
   - 1.0
+  - 1.1
   - nightly
 notifications:
   email: false
 branches:
   only: master
-git:
-  depth: 999999999
 after_success:
   # push coverage results to Codecov
-  - julia -e 'cd(Pkg.dir("AdaptiveDistanceFields")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+  - julia -e 'import Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
