@@ -6,6 +6,7 @@ using RegionTrees
 import RegionTrees: needs_refinement, refine_data
 using Interpolations: interpolate!,
                       extrapolate,
+                      gradient,
                       AbstractInterpolation,
                       BSpline,
                       OnGrid,
