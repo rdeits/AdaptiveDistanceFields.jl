@@ -40,7 +40,7 @@ end
 
 function fieldhessian(interp::AbstractInterpolation, boundary::HyperRectangle, point::AbstractArray)
     coords = (point - boundary.origin) ./ boundary.widths .+ 1
-    fieldhessian(interp, coords) ./ boundary.widths
+    fieldhessian(interp, coords) ./ reduce(hcat, boundary.widths for _ in 1:length(point))
 end
 
 function fieldhessian(itp::AbstractInterpolation, point::AbstractArray)
