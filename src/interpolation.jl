@@ -15,3 +15,17 @@ function evaluate(interp::AbstractInterpolation, boundary::HyperRectangle, point
     coords = (point - boundary.origin) ./ boundary.widths .+ 1
     evaluate(interp, coords)
 end
+
+function gradient(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
+    leaf = findleaf(cell, point)
+    gradient(leaf.data, leaf.boundary, point)
+end
+
+function gradient(interp::AbstractInterpolation, boundary::HyperRectangle, point::AbstractArray)
+    coords = (point - boundary.origin) ./ boundary.widths .+ 1
+    gradient(interp, coords) ./ boundary.widths
+end
+
+function gradient(itp::AbstractInterpolation, point::AbstractArray)
+    Interpolations.gradient(itp, point...)
+end
