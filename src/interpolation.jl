@@ -27,5 +27,5 @@ function gradient(interp::AbstractInterpolation, boundary::HyperRectangle, point
 end
 
 function gradient(itp::AbstractInterpolation, point::AbstractArray)
-    Interpolations.gradient(itp, point...)
+    gradient(itp, point...)
 end
