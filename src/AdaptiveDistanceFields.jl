@@ -6,13 +6,14 @@ using RegionTrees
 import RegionTrees: needs_refinement, refine_data
 using Interpolations: interpolate!,
                       extrapolate,
+                      gradient,
+                      hessian,
                       AbstractInterpolation,
                       BSpline,
                       OnGrid,
                       Linear,
                       Line
-import Interpolations.gradient
-import Interpolations.hessian
+
 using StaticArrays: SVector
 
 export AdaptiveDistanceField,
