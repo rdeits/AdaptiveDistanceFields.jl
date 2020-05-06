@@ -3,7 +3,7 @@
 end
 
 function evaluate(itp::AbstractInterpolation, point::AbstractArray)
-    itp[point...]
+    itp(point...)
 end
 
 function evaluate(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
