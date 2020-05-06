@@ -12,6 +12,6 @@ function evaluate(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInter
 end
 
 function evaluate(interp::AbstractInterpolation, boundary::HyperRectangle, point::AbstractArray)
-    coords = (point - boundary.origin) ./ boundary.widths + 1
+    coords = (point - boundary.origin) ./ boundary.widths .+ 1
     evaluate(interp, coords)
 end
