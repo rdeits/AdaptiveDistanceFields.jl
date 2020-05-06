@@ -45,6 +45,10 @@ function (field::AdaptiveDistanceField)(point::AbstractArray)
 end
 
 
+function fieldgradient(field::AdaptiveDistanceField,point::AbstractArray)
+    fieldgradient(field.root, point)
+end
+
 function fieldhessian(field::AdaptiveDistanceField,point::AbstractArray)
     fieldhessian(field.root, point)
 end
