@@ -12,11 +12,13 @@ using Interpolations: interpolate!,
                       Linear,
                       Line
 import Interpolations.gradient
+import Interpolations.hessian
 using StaticArrays: SVector
 
 export AdaptiveDistanceField,
        evaluate,
        fieldgradient,
+       fieldhessian,
        ConvexMesh
 
 include("interpolation.jl")
@@ -42,8 +44,8 @@ function (field::AdaptiveDistanceField)(point::AbstractArray)
 end
 
 
-function fieldgradient(field::AdaptiveDistanceField,point::AbstractArray)
-    fieldgradient(field.root, point)
+function fieldhessian(field::AdaptiveDistanceField,point::AbstractArray)
+    fieldhessian(field.root, point)
 end
 
 end
