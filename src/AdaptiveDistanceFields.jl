@@ -6,17 +6,17 @@ using RegionTrees
 import RegionTrees: needs_refinement, refine_data
 using Interpolations: interpolate!,
                       extrapolate,
-                      gradient,
                       AbstractInterpolation,
                       BSpline,
                       OnGrid,
                       Linear,
                       Line
+import Interpolations.gradient
 using StaticArrays: SVector
 
 export AdaptiveDistanceField,
        evaluate,
-       gradient,
+       fieldgradient,
        ConvexMesh
 
 include("interpolation.jl")
@@ -42,8 +42,8 @@ function (field::AdaptiveDistanceField)(point::AbstractArray)
 end
 
 
-function gradient(field::AdaptiveDistanceField,point::AbstractArray)
-    gradient(field.root, point)
+function fieldgradient(field::AdaptiveDistanceField,point::AbstractArray)
+    fieldgradient(field.root, point)
 end
 
 end
