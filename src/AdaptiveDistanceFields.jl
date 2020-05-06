@@ -40,4 +40,9 @@ function (field::AdaptiveDistanceField)(point::AbstractArray)
     evaluate(field.root, point)
 end
 
+
+function gradient(field::AdaptiveDistanceField,point::AbstractArray)
+    gradient(field.root, point)
+end
+
 end
