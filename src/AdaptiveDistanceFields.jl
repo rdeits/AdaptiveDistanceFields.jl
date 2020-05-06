@@ -15,6 +15,7 @@ using StaticArrays: SVector
 
 export AdaptiveDistanceField,
        evaluate,
+       gradient,
        ConvexMesh
 
 include("interpolation.jl")
