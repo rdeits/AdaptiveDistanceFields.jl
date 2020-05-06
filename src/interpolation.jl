@@ -16,16 +16,16 @@ function evaluate(interp::AbstractInterpolation, boundary::HyperRectangle, point
     evaluate(interp, coords)
 end
 
-function gradient(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
+function fieldgradient(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
     leaf = findleaf(cell, point)
-    gradient(leaf.data, leaf.boundary, point)
+    fieldgradient(leaf.data, leaf.boundary, point)
 end
 
-function gradient(interp::AbstractInterpolation, boundary::HyperRectangle, point::AbstractArray)
+function fieldgradient(interp::AbstractInterpolation, boundary::HyperRectangle, point::AbstractArray)
     coords = (point - boundary.origin) ./ boundary.widths .+ 1
-    gradient(interp, coords) ./ boundary.widths
+    fieldgradient(interp, coords) ./ boundary.widths
 end
 
-function gradient(itp::AbstractInterpolation, point::AbstractArray)
+function fieldgradient(itp::AbstractInterpolation, point::AbstractArray)
     gradient(itp, point...)
 end
