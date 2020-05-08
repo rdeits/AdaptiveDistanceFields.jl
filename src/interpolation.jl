@@ -18,6 +18,12 @@ end
 
 
 
+
+
+@generated function fieldgradient(itp::AbstractInterpolation, point::SVector{N}) where N
+    Expr(:call, :gradient, :itp, [:(point[$i]) for i in 1:N]...)
+end
+
 function fieldgradient(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
     leaf = findleaf(cell, point)
     fieldgradient(leaf.data, leaf.boundary, point)
@@ -32,6 +38,13 @@ function fieldgradient(itp::AbstractInterpolation, point::AbstractArray)
     gradient(itp, point...)
 end
 
+
+
+
+
+@generated function fieldhessian(itp::AbstractInterpolation, point::SVector{N}) where N
+    Expr(:call, :hessian, :itp, [:(point[$i]) for i in 1:N]...)
+end
 
 function fieldhessian(cell::Cell{D}, point::AbstractArray) where {D <: AbstractInterpolation}
     leaf = findleaf(cell, point)
