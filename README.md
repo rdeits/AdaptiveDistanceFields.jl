@@ -41,7 +41,7 @@ atol = 1e-2
 adf = AdaptiveDistanceField(true_signed_distance, origin, widths, rtol, atol)
 ```
 
-The meanings of `rtol` and `atol` are equivalent to those used by the built-in `isapprox()`: a cell is divided if `norm(true - approximate) <= atol + rtol*max(norm(true), norm(approximate))`, evaluated at the center of the cell and and the center of each of its faces. 
+The meanings of `rtol` and `atol` are equivalent to those used by the built-in `isapprox()`: a cell is divided unless `norm(true - approximate) <= atol + rtol*max(norm(true), norm(approximate))` at the center of the cell and and the center of each of its faces. 
 
 ## Using meshes
 
